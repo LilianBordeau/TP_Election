@@ -15,6 +15,8 @@ using SafeMath for uint256;
         string name;
         uint voteCount;
     }
+    
+    modifier onlyowner { if (msg.sender == owner) _; }
 
     // Store accounts that have voted
     mapping(address => bool) public voters;
@@ -27,7 +29,7 @@ using SafeMath for uint256;
     // voted event
     event votedEvent ( uint indexed _candidateId);
 
-    function addCandidate (string memory _name) private {
+    function addCandidate (string memory _name) onlyowner private {
         candidatesCount ++;
         candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
     }
